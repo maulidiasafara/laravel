@@ -4,6 +4,7 @@ ini halaman show
 <p style="color: black">{{$Customerlist->customer_id}}</p>
 <p style="color: blue">{{$Customerlist->name}}</p>
 <p style="color: green">{{$Customerlist->address}}</p>
+
 <a href="/Customer/{{$Customerlist->customer_id}}">show</a>
 <br />
 @endforeach
