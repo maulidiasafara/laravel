@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Employee;
-
+use Validator;
 class EmployeeController extends Controller
 {
     //
@@ -22,6 +19,23 @@ class EmployeeController extends Controller
     return view('Employee.create');
     }
     function store(Request $request){
+      $validator = Validator::make($request->all(), [
+        'txt_id'=>'required|string|max:255',
+        'txt_name'=>'required |string|max:50 ',
+        'txt_address'=>'required |string|max:50',
+        'txt_phone'=>'required |string|max:20'
+         ]);
+
+         if ($validator->fails()) {
+             return redirect('Employee/create')
+                         ->withErrors($validator)
+                         ->withInput();
+         }
+
+
+
+         // Store the blog post...
+
     //echo "pororo";
     $txtId = $request->input('txt_id');
     $txtName = $request->input('txt_name');
@@ -36,22 +50,18 @@ class EmployeeController extends Controller
     ]);
     return redirect('/Employee');
     }
-    public function show($id){
 
+    public function show($id){
     $Employee = Employee:: where('employee_id', $id)->get();
     return view('Employee.show', compact('Employee'));}
-
     public function edit($id){
-
     $Employee = Employee:: where('employee_id', $id)->get();
     return view('Employee.edit', compact('Employee'));}
-
     public function update(Request $request, $id){
     $txtId = $request->input('txt_id');
     $txtName = $request->input('txt_name');
     $txtAddress = $request->input('txt_address');
     $txtPhone = $request->input('txt_phone');
-
     Employee::where('employee_id', $id)->update([
     'employee_name' => $txtName,
     'employee_address' => $txtAddress,

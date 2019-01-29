@@ -23,11 +23,13 @@ class CustomerController extends Controller
     }
     function store(Request $request){
     //echo "pororo";
-    $txtId = $request->input('txt_id');
-    $txtName = $request->input('txt_name');
-    $txtAddress = $request->input('txt_address');
-
-    echo $txtId."<br /> ".$txtName."<br /> ".$txtAddress."<br /> ";
+    // $txtId = $request->input('txt_id');
+    // $txtName = $request->input('txt_name');
+    // $txtAddress = $request->input('txt_address');
+    //
+    // echo $txtId."<br /> ".$txtName."<br /> ".$txtAddress."<br /> ";
+    //buat validator
+        $validator = Validator::make($data->all(), ['customer_id' => 'required|strig|max:2'])->validate();
     Customer::create([
     'customer_id' => $txtId,
     'name' => $txtName,
@@ -36,6 +38,11 @@ class CustomerController extends Controller
     ]);
     return redirect('/Customer');
     }
+
+//buat validator
+    $validator = Validator::make($data->all(), ['customer_id' => 'required|strig|max:2'])->validate();
+
+
     public function show($id){
 
     $Customer = Customer:: where('customer_id', $id)->get();
